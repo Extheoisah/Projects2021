@@ -28,7 +28,7 @@ function generateRandomColor() {
     blue = generateRandomNum();
     green = generateRandomNum();
 
-    return rgbToHex(red, green, blue);
+    return [red, green, blue, rgbToHex(red, green, blue)];
 }
 
 function copyToClipboard(){
@@ -39,11 +39,16 @@ function copyToClipboard(){
 }
 
 generateBtn.addEventListener('click', () => {
-    const code = generateRandomColor()
+    const [r, g, b, code] = generateRandomColor()
     codeText.value = code;
 
     codeText.style.color = code;
 
+    const brightness = Math.round(((parseInt(r) * 299) +
+    (parseInt(g) * 587) +
+    (parseInt(b) * 114)) / 1000);
+
+    document.querySelector('.page-title').style.color = (brightness > 125) ? 'black' : 'white';
     document.body.style.backgroundColor = code;
 })
 
